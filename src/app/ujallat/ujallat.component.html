@@ -1,0 +1,72 @@
+<div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Új állat felvétele</h5>
+      
+        {{ujAllat.value|json}}
+
+      <form [formGroup]="ujAllat" (ngSubmit)="addAnimal(ujAllat.value)">
+        <div class="mb-3">
+          <label for="nev" class="form-label">Új állat neve</label>
+          <input formControlName="nev" type="text" class="form-control" id="nev">         
+        </div>
+
+        <div class="mb-3">
+          <label for="faj" class="form-label">Faja az állatnak</label>
+          <input formControlName="faj" type="text" class="form-control" id="faj">         
+        </div>
+
+        <div class="mb-3">
+          <label for="erkezes" class="form-label">Érkezés dátuma</label>
+          <input formControlName="erkezes" type="date" class="form-control" id="erkezes">         
+        </div>
+
+        <div class="mb-3">
+          <label for="helye" class="form-label">Helye az állatkertben</label>
+          <input formControlName="helye" type="text" class="form-control" id="helye">         
+        </div>
+
+        <div *ngIf="!showErrorDolgozo && !gondozok">
+            <div class="mb-3">
+            <p>Töltődik ...</p>
+            </div>
+        </div>
+
+        <div *ngIf="showErrorDolgozo">            
+                <div class="card alert alert-danger" role="alert">
+                    <div class="card-body">
+                    <h5 class="card-title">Hiba történt</h5>
+                    <p class="card-text">{{errorMessage}}</p>
+                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                    </div>
+                </div>            
+        </div>
+
+        <div *ngIf="!showErrorDolgozo && gondozok" class="form-group">
+            <div class="mb-3">
+              <label for="gondozo" class="form-label">Gondozója</label>
+              
+              <select formControlName="gondozo" class="form-control" id="gondozo">
+                <option value="unset">Kérem válasszon!</option>
+                <option *ngFor="let gondozo of gondozok | sortby:'nev'" [ngValue]="gondozo.nev">
+                    {{gondozo.nev}}
+                </option>
+            </select>              
+              
+            </div>
+        </div>
+       
+        <button type="submit" [disabled]="ujAllat.invalid" class="btn btn-primary">Felvétel</button>
+      </form>
+     
+    </div>
+  </div>
+
+  <div *ngIf="showError">
+    <div class="card alert alert-danger" role="alert">
+        <div class="card-body">
+        <h5 class="card-title">Hiba történt</h5>
+        <p class="card-text">{{errorMessage}}</p>
+        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+        </div>
+    </div>
+ </div>

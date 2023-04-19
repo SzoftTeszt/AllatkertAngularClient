@@ -1,0 +1,37 @@
+<div *ngIf="!showError && !allatok">
+    <div class="mb-3">
+    <p>Töltődik ...</p>
+    </div>
+</div>
+
+<div *ngIf="showError">            
+        <div class="card alert alert-danger" role="alert">
+            <div class="card-body">
+            <h5 class="card-title">Hiba történt</h5>
+            <p class="card-text">{{errorMessage}}</p>
+            <a href="#" (click)="refresh()" class="btn btn-primary">Újra töltés</a> 
+            </div>
+        </div>            
+</div>
+
+<table *ngIf="!showError && allatok" class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Állat neve</th>
+        <th scope="col">Faj</th>
+        <th scope="col">Gondozója</th>
+        <th scope="col">Helye az állatkerben</th>
+        <th scope="col">Érkezése</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let allat of allatok | sortby:'gondozo'">        
+        <td *ngFor="let oszlop of oszlopok">
+            {{allat[oszlop]}}
+        </td>        
+      </tr>
+     
+    </tbody>
+  </table>
